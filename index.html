@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>WebFactory — Digital Architecture</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/300.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.0.0/index.css">
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="grid-bg"></div>
+<div class="grain"></div>
+<div class="cursor" id="cursor"></div>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="brand"><span class="dot"></span> WebFactory / Digital Architecture</div>
+  <nav>
+    <a href="#intro">Intro</a>
+    <a href="#vision">Vision</a>
+    <a href="#services">Services</a>
+    <a href="#why">Philosophy</a>
+    <a href="#lab">Lab</a>
+    <a href="#est">Estimator</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="meta">
+    <span id="clock">—</span>
+    <button class="theme-btn" id="themeBtn">Swap Theme</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <canvas id="three-canvas"></canvas>
+  <div>
+    <h1>
+      <span class="line"><span>Web</span></span>
+      <span class="line"><span>Factory<em>.</em></span></span>
+      <span class="line"><span style="font-size:.48em;color:var(--ink-soft);font-weight:300;letter-spacing:-.02em">Digital architecture for the considered few.</span></span>
+    </h1>
+    <p class="lede">A design &amp; engineering bureau building bespoke, lightweight, quietly radical websites for founders and independents who refuse the template. Where innovation meets digital craftsmanship.</p>
+  </div>
+  <div class="hero-right">
+    <div class="tag">
+      [Design Archive / 2026]<br/>
+      SYS_DEPTH: 0000PX<br/>
+      METRIC: 0.0%<br/>
+      GRID: 12 COL / FLUID<br/>
+      RENDER: WEBGL + DOM
+    </div>
+    <div class="coord">
+      Lat. 40.7128° N<br/>
+      Long. 74.0060° W
+      <small>Build 03.21.26</small>
+    </div>
+  </div>
+  <div class="scroll-cue"><span class="bar"></span> Scroll to descend</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Bespoke Architecture <span class="dot"></span> Lightweight Systems <span class="dot"></span> Editorial Interfaces <span class="dot"></span> Typographic Precision <span class="dot"></span> Zero Bloat <span class="dot"></span> Custom Motion <span class="dot"></span></span>
+    <span>Bespoke Architecture <span class="dot"></span> Lightweight Systems <span class="dot"></span> Editorial Interfaces <span class="dot"></span> Typographic Precision <span class="dot"></span> Zero Bloat <span class="dot"></span> Custom Motion <span class="dot"></span></span>
+  </div>
+</div>
+
+<!-- INTRO -->
+<section class="block" id="intro">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="idx">01 / Introduction</div>
+      <h2>Not a website. <em>A habitat.</em></h2>
+      <div class="aside">[ Field Note / 2026 ]</div>
+    </div>
+    <div class="intro-grid">
+      <div class="reveal">
+        <div class="label">— The Premise</div>
+        <p>Welcome to WebFactory — where innovation meets digital craftsmanship.</p>
+        <p>We are not in the business of shipping websites. We are architects of digital experiences, sculpting bespoke online spaces tailored for startups, independent businesses, and the ambitious few in between.</p>
+        <p>Our mission is simple yet profound: to deliver exceptional web solutions that resonate with your unique brand identity and drive success in the digital age.</p>
+      </div>
+      <div class="reveal">
+        <div class="pull">
+          "We are <em>architects</em> of digital experiences, sculpting bespoke online spaces tailored for founders who would rather have a <em>point of view</em> than a theme."
+        </div>
+        <p style="margin-top:30px">Every project begins with a slow conversation and ends with a system you actually understand. No handoffs to templated CMSes. No surprise plugin bills. No design that could be swapped for anyone else's.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="block" id="vision">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="idx">02 / Vision</div>
+      <h2>At the <em>forefront,</em> quietly.</h2>
+      <div class="aside">[ North Star ]</div>
+    </div>
+    <div class="vision">
+      <div class="statement reveal">
+        Our vision is to remain at the <em>forefront of web development technology</em> — continuously pushing the boundaries of what's possible online. We aspire to be the trusted partner for those navigating the <em>complexities of the digital world</em>, offering solutions that not only meet, but exceed our clients' expectations.
+      </div>
+      <div class="diagram reveal">
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <div class="ring r3"></div>
+        <div class="core"></div>
+        <div class="tag t1">Signal</div>
+        <div class="tag t2">Substrate</div>
+        <div class="tag t3">Craft</div>
+        <div class="tag t4">Care</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="block" id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="idx">03 / Capabilities</div>
+      <h2>Three disciplines. <em>One practice.</em></h2>
+      <div class="aside">[ Service Matrix ]</div>
+    </div>
+    <div class="services">
+      <div class="service reveal">
+        <div class="num">— 01</div>
+        <div class="title">Custom Website Design<em>Digital masterpieces</em></div>
+        <div class="desc"><strong>Beautifully responsive, high-performance, lightweight.</strong> We avoid bulky, cookie-cutter templates in favor of optimized typography hierarchies, custom layouts, and highly-refined animations tailored precisely to your brand guidelines. Every pixel earned, none borrowed.</div>
+        <div class="arrow">Explore →</div>
+      </div>
+      <div class="service reveal">
+        <div class="num">— 02</div>
+        <div class="title">Maintenance &amp; Updates<em>Continuous care</em></div>
+        <div class="desc"><strong>Agile, fast, secure, contemporary.</strong> Continuous support frameworks include lightning-fast system audits, performance optimizations, and responsive adaptations to emerging hardware viewports. Your online presence remains completely up to date with modern design standards.</div>
+        <div class="arrow">Explore →</div>
+      </div>
+      <div class="service reveal">
+        <div class="num">— 03</div>
+        <div class="title">Tech Research &amp; Development<em>Emerging edges</em></div>
+        <div class="desc"><strong>Semantic structures, micro-interactions, API integrations, experimental interfaces.</strong> We stay ahead of the curve so our clients benefit from the latest innovations in design and function — before they become commodity features on the next platform refresh.</div>
+        <div class="arrow">Explore →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="block" id="why">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="idx">04 / Philosophy</div>
+      <h2>Why <em>this</em> bureau.</h2>
+      <div class="aside">[ Three Tenets ]</div>
+    </div>
+    <div class="philo-list">
+      <div class="philo-item reveal">
+        <div class="idx">— i.</div>
+        <div class="title">Personalized Solutions</div>
+        <div class="text">Every project begins with deep dives into your business vision, ensuring we build solutions that are uniquely yours. No off-the-shelf frameworks, no borrowed visual language, no "we've seen this before." First time, every time.</div>
+      </div>
+      <div class="philo-item reveal">
+        <div class="idx">— ii.</div>
+        <div class="title">Innovative Technology</div>
+        <div class="text">Our commitment to staying ahead of tech trends means clients always benefit from the latest innovations. We read the papers so you don't have to, then we translate that into shipped code — a competitive edge in both design and function.</div>
+      </div>
+      <div class="philo-item reveal">
+        <div class="idx">— iii.</div>
+        <div class="title">Exceptional Support</div>
+        <div class="text">We believe in building lasting relationships, so you are never alone on your digital journey. The person who designed your system is still reachable by email. That's not a policy, that's just how we work.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LAB -->
+<section class="block" id="lab">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="idx">05 / Laboratory</div>
+      <h2>A small <em>playground.</em></h2>
+      <div class="aside">[ Interactive · WebGL ]</div>
+    </div>
+    <div class="lab reveal">
+      <div class="lab-info">
+        <div>
+          <div class="label">— Live Research</div>
+          <h3>Geometry, <em>in your hands.</em></h3>
+          <p>Drag to rotate. Click the shapes to swap topology. A quiet demonstration of the same rendering layer we ship to production — performant, responsive, and under 40kb.</p>
+        </div>
+        <div class="lab-controls">
+          <button class="lab-btn active" data-shape="icosa">Icosahedron</button>
+          <button class="lab-btn" data-shape="torus">Torus Knot</button>
+          <button class="lab-btn" data-shape="octa">Octahedron</button>
+          <button class="lab-btn" data-shape="sphere">Sphere</button>
+        </div>
+      </div>
+      <div class="lab-stage">
+        <canvas id="lab-canvas"></canvas>
+        <div class="hint"><span>[ Drag to orbit ]</span><span id="labFps">— fps</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESTIMATOR -->
+<section class="block" id="est">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="idx">06 / Estimation Planner</div>
+      <h2>A <em>quiet</em> projection of scope.</h2>
+      <div class="aside">[ Interactive ]</div>
+    </div>
+    <div class="est-wrap">
+      <div class="est-options reveal">
+        <div class="est-option" data-hrs="40" data-name="Bespoke Architectural Website Design">
+          <div class="left"><div class="check">+</div><div class="name">Bespoke Architectural Website Design</div></div>
+          <div class="hrs">Est. 40 hrs</div>
+        </div>
+        <div class="est-option" data-hrs="12" data-name="Continuous Maintenance & Operations">
+          <div class="left"><div class="check">+</div><div class="name">Continuous Maintenance &amp; Operations</div></div>
+          <div class="hrs">Est. 12 hrs</div>
+        </div>
+        <div class="est-option" data-hrs="30" data-name="Emerging Tech & R&D Strategy">
+          <div class="left"><div class="check">+</div><div class="name">Emerging Tech &amp; R&amp;D Strategy</div></div>
+          <div class="hrs">Est. 30 hrs</div>
+        </div>
+        <div class="est-option" data-hrs="8" data-name="Brand & Typographic System">
+          <div class="left"><div class="check">+</div><div class="name">Brand &amp; Typographic System</div></div>
+          <div class="hrs">Est. 8 hrs</div>
+        </div>
+        <div class="est-option" data-hrs="18" data-name="Custom Motion & Interaction Design">
+          <div class="left"><div class="check">+</div><div class="name">Custom Motion &amp; Interaction Design</div></div>
+          <div class="hrs">Est. 18 hrs</div>
+        </div>
+      </div>
+      <div class="est-result reveal">
+        <div class="label">— Estimated Scope</div>
+        <div class="big"><span id="estTotal">0</span><span class="unit">eng. hours</span></div>
+        <div class="breakdown">
+          <div class="row"><span>Selected modules</span><span id="estCount">0</span></div>
+          <div class="row"><span>Typical engagement</span><span>4–10 weeks</span></div>
+          <div class="row"><span>Bureau rate (ind.)</span><span>on request</span></div>
+          <div class="row total"><span>Projection</span><span id="estRange">0 — 0 hrs</span></div>
+        </div>
+        <a href="#contact" class="cta">Request formal proposal →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="block" id="dialogue">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="idx">07 / Dialogue</div>
+      <h2>Transmissions <em>from the field.</em></h2>
+      <div class="aside">[ Verified Partners ]</div>
+    </div>
+    <div class="transmissions reveal">
+      <div class="trans">
+        <div class="meta">Signal 001<br/><span class="status">● VERIFIED</span><br/>2026.02.14</div>
+        <div class="quote">WebFactory completely re-engineered our digital platform. Our loading latency dropped significantly, and they didn't push bloated cookie-cutter frameworks on us. The difference is measurable, visible, and quiet.</div>
+        <div class="sig">— CEO<br/>Asian Infotech</div>
+      </div>
+      <div class="trans">
+        <div class="meta">Signal 002<br/><span class="status">● VERIFIED</span><br/>2026.04.02</div>
+        <div class="quote">Their clean-minimalist approach keeps focus perfectly where it should be — on our core product. Our users repeatedly comment on the striking typography. We've stopped apologizing for our website.</div>
+        <div class="sig">— Lead Designer<br/>GENZ Studio</div>
+      </div>
+      <div class="trans">
+        <div class="meta">Signal 003<br/><span class="status">● VERIFIED</span><br/>2026.05.19</div>
+        <div class="quote">Rare studio. They asked more questions than any agency we interviewed, shipped less than we expected, and the result was twice as good as what we asked for. We are customers for the long haul.</div>
+        <div class="sig">— Founder<br/> ABM</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT (UPDATED WITH FIREBASE INTEGRATION) -->
+<section class="block" id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="idx">08 / Contact</div>
+      <h2>Begin a <em>conversation.</em></h2>
+      <div class="aside">[ Open Channel ]</div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3>Let's build <em>something specific</em> together.</h3>
+        <p>We take on a limited number of engagements each quarter. If you're building something that deserves care, we'd like to hear about it. Initial conversations are always free, always unhurried.</p>
+        <div class="contact-channels">
+          <a href="mailto:webfactory003@gmail.com" class="channel">
+            <div class="kind">Email</div>
+            <div class="val">webfactory003@gmail.com</div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="#" class="channel">
+            <div class="kind">Studio</div>
+            <div class="val">Remote / Worldwide</div>
+            <div class="arrow">→</div>
+          </a>
+          <a href="#" class="channel">
+            <div class="kind">Hours</div>
+            <div class="val">Mon–Thu / 09:00–17:00 IST</div>
+            <div class="arrow">→</div>
+          </a>
+        </div>
+      </div>
+      <div class="contact-form reveal" id="contactForm">
+        <form id="theForm">
+          <div class="form-row">
+            <label>01 — Your name <span class="required">*</span></label>
+            <input type="text" id="formName" required placeholder="Full name or alias"/>
+          </div>
+          <div class="form-row">
+            <label>02 — Reach (email) <span class="required">*</span></label>
+            <input type="email" id="formEmail" required placeholder="you@domain.tld"/>
+          </div>
+          <div class="form-row">
+            <label>03 — Organisation</label>
+            <input type="text" id="formOrg" placeholder="Company, studio, or solo"/>
+          </div>
+          <div class="form-row">
+            <label>04 — Engagement type <span class="required">*</span></label>
+            <select id="formEngagement">
+              <option value="">Select type...</option>
+              <option>New website build</option>
+              <option>Redesign / refactor</option>
+              <option>Maintenance retainer</option>
+              <option>R&D / experimental</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>05 — The brief <span class="required">*</span></label>
+            <textarea id="formBrief" required placeholder="Tell us what you're building, who it's for, and what you suspect is broken..." minlength="20"></textarea>
+          </div>
+          <div class="form-submit">
+            <div class="cost">[ Secure channel · 48h response ]</div>
+            <button type="submit" id="submitBtn">Transmit →</button>
+          </div>
+        </form>
+        <div class="form-success" id="formSuccess">
+          <div class="tick">✓</div>
+          <h4>Transmission received.</h4>
+          <p>A human will review your brief within 48 hours. In the meantime, the cursor is still watching.</p>
+        </div>
+        <div class="form-error" id="formError" style="display:none;">
+          <div class="tick" style="background:var(--ink-soft);color:var(--bg);">!</div>
+          <h4>Transmission failed.</h4>
+          <p id="formErrorMsg">Something went wrong. Please try again or email us directly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="brand-big">Web<br/>Factory<em>.</em></div>
+      </div>
+      <div>
+        <h5>Bureau</h5>
+        <ul>
+          <li><a href="#intro">Introduction</a></li>
+          <li><a href="#vision">Vision</a></li>
+          <li><a href="#why">Philosophy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Work</h5>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#lab">Laboratory</a></li>
+          <li><a href="#est">Estimator</a></li>
+          <li><a href="#dialogue">Dialogue</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Elsewhere</h5>
+        <ul>
+          <li><a href="#">Are.na</a></li>
+          <li><a href="#">Read.cv</a></li>
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© WebFactory / Est. 2026</span>
+      <span>Built in-house · No frameworks were harmed</span>
+      <span id="footClock">—</span>
+    </div>
+  </div>
+</footer>
+
+<div class="status-chip">
+  <span class="dot"></span> Bureau online · Accepting Q3
+</div>
+
+<script>
+/* =============== CURSOR =============== */
+const cursor = document.getElementById('cursor');
+let mx=window.innerWidth/2, my=window.innerHeight/2, cx=mx, cy=my;
+window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+window.addEventListener('mouseleave',()=>cursor.classList.add('hide'));
+window.addEventListener('mouseenter',()=>cursor.classList.remove('hide'));
+(function loop(){
+  cx += (mx-cx)*.22;
+  cy += (my-cy)*.22;
+  cursor.style.left = cx+'px';
+  cursor.style.top = cy+'px';
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a,button,input,textarea,select,.est-option,.service,.channel').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cursor.classList.add('grow'));
+  el.addEventListener('mouseleave',()=>cursor.classList.remove('grow'));
+});
+
+/* =============== CLOCK =============== */
+function tick(){
+  const d=new Date();
+  const pad=n=>String(n).padStart(2,'0');
+  const s=`${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())} EST`;
+  const c=document.getElementById('clock');if(c)c.textContent=s;
+  const f=document.getElementById('footClock');if(f)f.textContent=`Local · ${s}`;
+}
+tick();setInterval(tick,1000);
+
+/* =============== THEME =============== */
+const themeBtn = document.getElementById('themeBtn');
+themeBtn.addEventListener('click',()=>{
+  const root = document.documentElement.style;
+  const current = document.body.dataset.theme;
+  if(current==='dark'){
+    document.body.dataset.theme='';
+    root.setProperty('--bg','#f5f1ea');
+    root.setProperty('--bg-2','#ebe6dc');
+    root.setProperty('--bg-3','#e1dbce');
+    root.setProperty('--ink','#1a1a1a');
+    root.setProperty('--ink-soft','#4a4843');
+    root.setProperty('--ink-dim','#8a8680');
+    root.setProperty('--line','rgba(26,26,26,.12)');
+    root.setProperty('--line-strong','rgba(26,26,26,.25)');
+    root.setProperty('--grid-color','rgba(26,26,26,.055)');
+    root.setProperty('--grid-strong','rgba(26,26,26,.11)');
+    themeBtn.textContent='Swap Theme';
+    if(heroMat){heroMat.color.setHex(0xc2410c)}
+  } else {
+    document.body.dataset.theme='dark';
+    root.setProperty('--bg','#14120f');
+    root.setProperty('--bg-2','#1c1a16');
+    root.setProperty('--bg-3','#24211b');
+    root.setProperty('--ink','#ece7dc');
+    root.setProperty('--ink-soft','#b8b2a4');
+    root.setProperty('--ink-dim','#7a7568');
+    root.setProperty('--line','rgba(236,231,220,.1)');
+    root.setProperty('--line-strong','rgba(236,231,220,.22)');
+    root.setProperty('--grid-color','rgba(236,231,220,.045)');
+    root.setProperty('--grid-strong','rgba(236,231,220,.09)');
+    themeBtn.textContent='Swap Theme';
+    if(heroMat){heroMat.color.setHex(0xe8a87c)}
+  }
+});
+
+/* =============== REVEAL =============== */
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* =============== ESTIMATOR =============== */
+const opts = document.querySelectorAll('.est-option');
+const totalEl = document.getElementById('estTotal');
+const countEl = document.getElementById('estCount');
+const rangeEl = document.getElementById('estRange');
+opts.forEach(o=>o.addEventListener('click',()=>{
+  o.classList.toggle('active');
+  o.querySelector('.check').textContent = o.classList.contains('active')?'✓':'+';
+  let t=0,c=0;
+  document.querySelectorAll('.est-option.active').forEach(a=>{t+=+a.dataset.hrs;c++});
+  totalEl.textContent=t;
+  countEl.textContent=c;
+  const lo=Math.round(t*.85),hi=Math.round(t*1.2);
+  rangeEl.textContent=`${lo} — ${hi} hrs`;
+}));
+
+/* =============== FORM =============== */
+document.getElementById('theForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  document.getElementById('theForm').style.display='none';
+  document.getElementById('formSuccess').classList.add('show');
+});
+
+/* =============== SMOOTH SCROLL =============== */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const id=a.getAttribute('href');
+    if(id.length>1){
+      const el=document.querySelector(id);
+      if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'})}
+    }
+  });
+});
+
+/* =============== THREE.JS HERO =============== */
+let heroMat = null;
+(function(){
+  const canvas = document.getElementById('three-canvas');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 0.1, 100);
+  camera.position.z = 6;
+  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  const geo = new THREE.IcosahedronGeometry(1.6, 1);
+  const mat = new THREE.MeshBasicMaterial({color:0xc2410c, wireframe:true, transparent:true, opacity:.35});
+  heroMat = mat;
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.position.set(2.4, -0.2, 0);
+  scene.add(mesh);
+
+  const geo2 = new THREE.DodecahedronGeometry(2.4, 0);
+  const mat2 = new THREE.MeshBasicMaterial({color:0x1a1a1a, wireframe:true, transparent:true, opacity:.12});
+  const mesh2 = new THREE.Mesh(geo2, mat2);
+  mesh2.position.set(2.4, -0.2, 0);
+  scene.add(mesh2);
+
+  const particleCount = 180;
+  const positions = new Float32Array(particleCount*3);
+  for(let i=0;i<particleCount;i++){
+    positions[i*3]=(Math.random()-.5)*18;
+    positions[i*3+1]=(Math.random()-.5)*10;
+    positions[i*3+2]=(Math.random()-.5)*6;
+  }
+  const pGeo = new THREE.BufferGeometry();
+  pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const pMat = new THREE.PointsMaterial({color:0x1a1a1a, size:.018, transparent:true, opacity:.45});
+  const points = new THREE.Points(pGeo, pMat);
+  scene.add(points);
+
+  let mouseX=0, mouseY=0;
+  window.addEventListener('mousemove', e=>{
+    mouseX = (e.clientX / window.innerWidth - .5);
+    mouseY = (e.clientY / window.innerHeight - .5);
+  });
+  window.addEventListener('resize', ()=>{
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  function animate(){
+    mesh.rotation.x += .0025;
+    mesh.rotation.y += .0035;
+    mesh2.rotation.x -= .0012;
+    mesh2.rotation.y -= .0018;
+    points.rotation.y += .0004;
+    mesh.position.x = 2.4 + mouseX * .35;
+    mesh.position.y = -0.2 + -mouseY * .35;
+    mesh2.position.x = 2.4 + mouseX * .22;
+    mesh2.position.y = -0.2 + -mouseY * .22;
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+/* =============== LAB INTERACTIVE 3D =============== */
+(function(){
+  const canvas = document.getElementById('lab-canvas');
+  if(!canvas) return;
+  const stage = canvas.parentElement;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.z = 4;
+  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+
+  function resize(){
+    const w = stage.clientWidth, h = stage.clientHeight;
+    renderer.setSize(w,h,false);
+    camera.aspect = w/h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  new ResizeObserver(resize).observe(stage);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  const dir = new THREE.DirectionalLight(0xffffff, 0.9);
+  dir.position.set(3,4,5);
+  scene.add(dir);
+  const rim = new THREE.DirectionalLight(0xc2410c, 0.6);
+  rim.position.set(-3,-2,-3);
+  scene.add(rim);
+
+  const shapes = {
+    icosa: () => new THREE.IcosahedronGeometry(1.3, 0),
+    torus: () => new THREE.TorusKnotGeometry(0.85, 0.28, 96, 16),
+    octa:  () => new THREE.OctahedronGeometry(1.35, 0),
+    sphere:() => new THREE.SphereGeometry(1.25, 40, 40)
+  };
+
+  const mat = new THREE.MeshStandardMaterial({
+    color: 0xece7dc,
+    roughness: 0.45,
+    metalness: 0.25,
+    flatShading: true
+  });
+  let mesh = new THREE.Mesh(shapes.icosa(), mat);
+  scene.add(mesh);
+
+  const wire = new THREE.MeshBasicMaterial({color:0xc2410c, wireframe:true, transparent:true, opacity:.35});
+  let wireMesh = new THREE.Mesh(shapes.icosa(), wire);
+  scene.add(wireMesh);
+
+  function swapShape(key){
+    const g = shapes[key]();
+    mesh.geometry.dispose();
+    wireMesh.geometry.dispose();
+    mesh.geometry = g;
+    wireMesh.geometry = g.clone();
+  }
+
+  document.querySelectorAll('.lab-btn').forEach(b=>{
+    b.addEventListener('click',()=>{
+      document.querySelectorAll('.lab-btn').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      swapShape(b.dataset.shape);
+    });
+  });
+
+  let dragging=false, lx=0, ly=0, vx=0, vy=0;
+  canvas.addEventListener('pointerdown', e=>{dragging=true; lx=e.clientX; ly=e.clientY; canvas.setPointerCapture(e.pointerId)});
+  canvas.addEventListener('pointermove', e=>{
+    if(!dragging) return;
+    const dx=e.clientX-lx, dy=e.clientY-ly;
+    vx = dy*.006; vy = dx*.006;
+    lx=e.clientX; ly=e.clientY;
+  });
+  canvas.addEventListener('pointerup', ()=>dragging=false);
+  canvas.addEventListener('pointercancel', ()=>dragging=false);
+
+  let frames=0, lastT=performance.now();
+  const fpsEl = document.getElementById('labFps');
+
+  function animate(){
+    if(!dragging){
+      vx *= 0.95; vy *= 0.95;
+      mesh.rotation.y += 0.003;
+      wireMesh.rotation.y += 0.003;
+    }
+    mesh.rotation.x += vx;
+    mesh.rotation.y += vy;
+    wireMesh.rotation.x = mesh.rotation.x;
+    wireMesh.rotation.y = mesh.rotation.y;
+    renderer.render(scene, camera);
+
+    frames++;
+    const t=performance.now();
+    if(t-lastT>=500){
+      fpsEl.textContent = Math.round(frames*1000/(t-lastT))+' fps';
+      frames=0; lastT=t;
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+/* =============== FIREBASE FORM SUBMISSION =============== */
+const FIREBASE_DB_URL = 'https://webfactory-home-default-rtdb.asia-southeast1.firebasedatabase.app';
+
+document.getElementById('theForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const submitBtn = document.getElementById('submitBtn');
+  const formSuccess = document.getElementById('formSuccess');
+  const formError = document.getElementById('formError');
+  const formErrorMsg = document.getElementById('formErrorMsg');
+  const theForm = document.getElementById('theForm');
+  
+  // Get form values
+  const name = document.getElementById('formName').value.trim();
+  const email = document.getElementById('formEmail').value.trim();
+  const org = document.getElementById('formOrg').value.trim();
+  const engagement = document.getElementById('formEngagement').value;
+  const brief = document.getElementById('formBrief').value.trim();
+  
+  // Validate
+  if (!name || !email || !engagement || !brief) {
+    formErrorMsg.textContent = 'Please fill in all required fields (marked with *).';
+    formError.style.display = 'block';
+    return;
+  }
+  
+  if (brief.length < 20) {
+    formErrorMsg.textContent = 'Please provide a brief of at least 20 characters. Tell us more about your project.';
+    formError.style.display = 'block';
+    return;
+  }
+  
+  // Disable button & show loading state
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Transmitting...';
+  formError.style.display = 'none';
+  
+  try {
+    const payload = {
+      name,
+      email,
+      organisation: org || 'Not specified',
+      engagement,
+      brief,
+      status: 'new',
+      createdAt: Date.now(),
+      source: 'webfactory.site'
+    };
+    
+    const response = await fetch(`${FIREBASE_DB_URL}/requests.json`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    // Success!
+    theForm.style.display = 'none';
+    formSuccess.classList.add('show');
+    
+  } catch (error) {
+    console.error('Form submission error:', error);
+    formErrorMsg.textContent = 'Unable to transmit. Please email us directly at webfactory003@gmail.com — we\'ll respond within 48 hours.';
+    formError.style.display = 'block';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Transmit →';
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>WebFactory — Signal Dashboard</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/300.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.0.0/index.css">
+
+<style>
+:root {
+  /* Default: Light editorial theme */
+  --bg: #f5f1ea;
+  --bg-2: #ebe6dc;
+  --bg-3: #e1dbce;
+  --ink: #1a1a1a;
+  --ink-soft: #4a4843;
+  --ink-dim: #8a8680;
+  --line: rgba(26,26,26,.12);
+  --line-strong: rgba(26,26,26,.25);
+  --accent: #c2410c;
+  --accent-soft: #e8d5c4;
+  --grid-color: rgba(26,26,26,.055);
+  --grid-strong: rgba(26,26,26,.11);
+  --green: #2e7d32;
+  --red: #c62828;
+  
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+body[data-theme="dark"] {
+  /* Dark mode theme */
+  --bg: #14120f;
+  --bg-2: #1c1a16;
+  --bg-3: #24211b;
+  --ink: #ece7dc;
+  --ink-soft: #b8b2a4;
+  --ink-dim: #7a7568;
+  --line: rgba(236,231,220,.1);
+  --line-strong: rgba(236,231,220,.22);
+  --accent: #e8a87c;
+  --accent-soft: #382d24;
+  --grid-color: rgba(236,231,220,.045);
+  --grid-strong: rgba(236,231,220,.09);
+  --green: #81c784;
+  --red: #e57373;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  cursor: none;
+  position: relative;
+  min-height: 100vh;
+}
+
+@media (hover: none) {
+  body, button, a, input, textarea, select {
+    cursor: auto !important;
+  }
+}
+
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+    linear-gradient(var(--grid-strong) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-strong) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px, 200px 200px, 200px 200px;
+  background-position: center center;
+  -webkit-mask-image: radial-gradient(ellipse 140% 120% at 50% 50%, rgba(0,0,0,.55) 0%, rgba(0,0,0,.25) 45%, rgba(0,0,0,0) 85%);
+  mask-image: radial-gradient(ellipse 140% 120% at 50% 50%, rgba(0,0,0,.55) 0%, rgba(0,0,0,.25) 45%, rgba(0,0,0,0) 85%);
+  transition: opacity .4s ease;
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: .35;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0.08 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* Cursor system */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: var(--ink);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: width .22s ease, height .22s ease, background .22s ease, opacity .22s;
+  transform: translate(-50%, -50%);
+}
+.cursor.grow {
+  width: 28px;
+  height: 28px;
+  background: var(--accent);
+  mix-blend-mode: multiply;
+}
+.cursor.hide {
+  opacity: 0;
+}
+
+.wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+  position: relative;
+  z-index: 2;
+}
+@media (max-width: 640px) {
+  .wrap { padding: 0 20px; }
+}
+
+header.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: var(--ink-soft);
+  background: rgba(245,241,234,.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+  z-index: 100;
+}
+body[data-theme="dark"] header.topbar {
+  background: rgba(20,18,15,.78);
+}
+header.topbar .brand {
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+header.topbar .brand .dot {
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2.2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .35; transform: scale(.65); }
+}
+
+header.topbar .meta {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.theme-btn {
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  padding: 6px 12px;
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  transition: all .25s;
+  font-family: var(--mono);
+  cursor: none;
+}
+.theme-btn:hover {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+
+@media(max-width: 520px) {
+  header.topbar .meta span:not(.theme-btn) { display: none; }
+}
+
+.lock-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+}
+.lock-screen.hidden {
+  display: none !important;
+}
+.lock-box {
+  background: var(--bg-2);
+  border: 1px solid var(--line-strong);
+  padding: 56px 48px;
+  max-width: 460px;
+  width: 100%;
+  position: relative;
+  z-index: 5;
+}
+.lock-box h2 {
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: -.03em;
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+.lock-box h2 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+.lock-box .sub {
+  color: var(--ink-soft);
+  font-size: .85rem;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+.lock-box input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  padding: 16px;
+  font-family: var(--mono);
+  font-size: .95rem;
+  outline: none;
+  margin-bottom: 20px;
+  transition: border-color 0.3s;
+}
+.lock-box input:focus {
+  border-color: var(--accent);
+}
+.lock-box button {
+  width: 100%;
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  padding: 16px;
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: .85rem;
+  cursor: none;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  transition: all .25s;
+}
+.lock-box button:hover {
+  background: var(--accent);
+  color: #fff;
+}
+.lock-box .error {
+  color: var(--red);
+  font-family: var(--mono);
+  font-size: .75rem;
+  margin-top: 14px;
+  display: none;
+  letter-spacing: 0.02em;
+}
+
+.dashboard {
+  padding: 120px 0 80px;
+  min-height: 100vh;
+}
+.dashboard.hidden {
+  display: none !important;
+}
+
+.db-header-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 56px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+
+.db-title-area h1 {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 300;
+  letter-spacing: -.035em;
+  line-height: 1.05;
+}
+.db-title-area h1 em {
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 400;
+}
+.db-title-area .sub {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+  margin-top: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.db-header-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.db-meta {
+  text-align: right;
+}
+.db-meta .stat {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.db-meta .count {
+  font-size: 3rem;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+
+.db-btn {
+  background: var(--bg-2);
+  border: 1px solid var(--line-strong);
+  color: var(--ink-soft);
+  padding: 10px 20px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: none;
+  transition: all .25s ease;
+}
+.db-btn:hover {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+.db-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.db-btn.logout {
+  border-color: var(--red);
+  color: var(--red);
+  background: transparent;
+}
+.db-btn.logout:hover {
+  background: var(--red);
+  color: #fff;
+}
+
+.filter-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  align-items: center;
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: 24px;
+}
+
+.sync-indicator {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--ink-dim);
+  font-family: var(--mono);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.sync-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px rgba(46, 125, 50, 0.4);
+}
+
+.requests-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.request-card {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  padding: 36px;
+  transition: all .3s cubic-bezier(.2,.8,.2,1);
+  display: grid;
+  grid-template-columns: 180px 1fr auto;
+  gap: 40px;
+  align-items: start;
+  position: relative;
+}
+.request-card:hover {
+  transform: translateX(4px);
+  border-color: var(--line-strong);
+}
+.request-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  transition: width 0.3s;
+}
+.request-card.new {
+  border-left: 3px solid var(--accent);
+}
+.request-card.reviewed {
+  opacity: .65;
+  border-left: 3px solid var(--green);
+}
+
+.req-left {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+}
+.req-status {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  margin-bottom: 12px;
+  font-family: var(--mono);
+}
+.req-status.new {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.req-status.reviewed {
+  background: rgba(46, 125, 50, 0.1);
+  color: var(--green);
+}
+
+.req-center h4 {
+  font-size: 1.35rem;
+  font-weight: 400;
+  margin-bottom: 6px;
+  letter-spacing: -0.015em;
+}
+.req-center .email {
+  font-size: .9rem;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.req-center .org {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-dim);
+  margin-bottom: 16px;
+}
+.req-center .brief {
+  font-size: .95rem;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  margin-bottom: 18px;
+  border-left: 1px solid var(--line-strong);
+  padding-left: 18px;
+}
+.req-center .engagement {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  background: var(--bg-3);
+  color: var(--ink-soft);
+}
+
+.req-right {
+  align-self: center;
+}
+.req-right button {
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--ink-soft);
+  padding: 10px 18px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: none;
+  white-space: nowrap;
+  transition: all .25s;
+}
+.req-right button:hover {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+.req-right button[disabled] {
+  opacity: .5;
+  border-color: var(--line);
+  color: var(--ink-dim);
+}
+.req-right button[disabled]:hover {
+  background: transparent;
+  color: var(--ink-dim);
+  border-color: var(--line);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 100px 32px;
+  background: var(--bg-2);
+  border: 1px dashed var(--line-strong);
+}
+.empty-state h3 {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.empty-state p {
+  font-size: .9rem;
+  color: var(--ink-soft);
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 80px 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.loading-state .pulse {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse-light 1s infinite alternate;
+}
+@keyframes pulse-light {
+  0% { transform: scale(0.8); opacity: 0.4; }
+  100% { transform: scale(1.4); opacity: 1; }
+}
+
+/* Toast container styled as metadata pill */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  background: var(--ink);
+  color: var(--bg);
+  border: 1px solid var(--line-strong);
+  padding: 14px 24px;
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: all .35s cubic-bezier(.2,.8,.2,1);
+  pointer-events: none;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media(max-width: 900px) {
+  .request-card {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 28px;
+  }
+}
+
+@media(max-width: 768px) {
+  .dashboard {
+    padding-top: 100px;
+  }
+  .db-header-block {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+  .db-meta {
+    text-align: left;
+  }
+  .db-header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .filter-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .sync-indicator {
+    margin-left: 0;
+    width: 100%;
+    border-top: 1px dashed var(--line);
+    padding-top: 16px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="grain"></div>
+<div class="cursor" id="cursor"></div>
+
+<header class="topbar">
+  <div class="brand"><span class="dot"></span> WebFactory // Signal Dashboard</div>
+  <div class="meta">
+    <span id="clock">—</span>
+    <button class="theme-btn" id="themeBtn">Swap Theme</button>
+  </div>
+</header>
+
+<!-- LOCK SCREEN -->
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-box">
+    <h2>Signal <em>Dashboard</em></h2>
+    <div class="sub">Authorized personnel only. Enter the terminal passphrase to continue.</div>
+    <input type="password" id="passphraseInput" placeholder="Passphrase" autofocus />
+    <button id="unlockBtn">Authenticate →</button>
+    <div class="error" id="lockError">Invalid passphrase. Security protocols active.</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="wrap">
+  <div class="dashboard hidden" id="dashboard">
+    
+    <div class="db-header-block">
+      <div class="db-title-area">
+        <h1>Active <em>Transmissions</em></h1>
+        <div class="sub">Client Request Monitor · Polling every 5s</div>
+      </div>
+      
+      <div class="db-header-right">
+        <div class="db-meta">
+          <div class="stat">Active signals</div>
+          <div class="count" id="totalCount">0</div>
+        </div>
+        <button class="db-btn logout" id="logoutBtn">Lock terminal →</button>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <button class="db-btn active filter-btn" data-filter="all">All Signals</button>
+      <button class="db-btn filter-btn" data-filter="new">New</button>
+      <button class="db-btn filter-btn" data-filter="reviewed">Reviewed</button>
+      <span class="sync-indicator">
+        <span class="sync-dot" id="syncDot"></span>
+        <span id="syncText">Live</span>
+        <span style="margin-left:8px" id="dbClock">—</span>
+      </span>
+    </div>
+
+    <div class="requests-list" id="requestsList">
+      <div class="loading-state"><span class="pulse"></span> Fetching signals from substrate...</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* =============== INTERACTION CUES & CURSOR =============== */
+const cursor = document.getElementById('cursor');
+let mx = window.innerWidth / 2, my = window.innerHeight / 2, cx = mx, cy = my;
+
+window.addEventListener('mousemove', e => {
+  mx = e.clientX;
+  my = e.clientY;
+});
+window.addEventListener('mouseleave', () => cursor.classList.add('hide'));
+window.addEventListener('mouseenter', () => cursor.classList.remove('hide'));
+
+(function loop() {
+  cx += (mx - cx) * .22;
+  cy += (my - cy) * .22;
+  cursor.style.left = cx + 'px';
+  cursor.style.top = cy + 'px';
+  requestAnimationFrame(loop);
+})();
+
+function rebindCursors() {
+  document.querySelectorAll('a, button, input, textarea, select, .db-btn').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+  });
+}
+rebindCursors();
+
+/* =============== SYSTEM THEME SWAP =============== */
+const themeBtn = document.getElementById('themeBtn');
+// Start dark default matching the main dashboard look, but support switching to paper theme
+document.body.dataset.theme = 'dark';
+
+themeBtn.addEventListener('click', () => {
+  const current = document.body.dataset.theme;
+  if (current === 'dark') {
+    document.body.dataset.theme = '';
+  } else {
+    document.body.dataset.theme = 'dark';
+  }
+});
+
+/* =============== LIVE TOPBAR CLOCK =============== */
+function tickTopbar() {
+  const d = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const s = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())} EST`;
+  const c = document.getElementById('clock');
+  if (c) c.textContent = s;
+}
+tickTopbar();
+setInterval(tickTopbar, 1000);
+
+/* =============== CONFIG =============== */
+const PASSPHRASE = 'gonn@6esuccessfuL'; // CHANGE THIS
+const FIREBASE_DB_URL = 'https://webfactory-home-default-rtdb.asia-southeast1.firebasedatabase.app';
+const POLL_INTERVAL = 5000; // 5 seconds
+const SESSION_KEY = 'wf_dashboard_auth';
+
+/* =============== PASSPHRASE GATE =============== */
+const lockScreen = document.getElementById('lockScreen');
+const dashboard = document.getElementById('dashboard');
+const passphraseInput = document.getElementById('passphraseInput');
+const unlockBtn = document.getElementById('unlockBtn');
+const lockError = document.getElementById('lockError');
+
+if (sessionStorage.getItem(SESSION_KEY) === 'true') {
+  lockScreen.classList.add('hidden');
+  dashboard.classList.remove('hidden');
+  initDashboard();
+}
+
+unlockBtn.addEventListener('click', () => {
+  if (passphraseInput.value === PASSPHRASE) {
+    sessionStorage.setItem(SESSION_KEY, 'true');
+    lockScreen.classList.add('hidden');
+    dashboard.classList.remove('hidden');
+    initDashboard();
+  } else {
+    lockError.style.display = 'block';
+    passphraseInput.value = '';
+    passphraseInput.focus();
+  }
+});
+
+passphraseInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') unlockBtn.click();
+});
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  sessionStorage.removeItem(SESSION_KEY);
+  location.reload();
+});
+
+/* =============== DASHBOARD LOGIC =============== */
+function initDashboard() {
+  const requestsList = document.getElementById('requestsList');
+  const totalCount = document.getElementById('totalCount');
+  const syncDot = document.getElementById('syncDot');
+  const syncText = document.getElementById('syncText');
+  const toast = document.getElementById('toast');
+  
+  let allRequests = {};
+  let currentFilter = 'all';
+  let isFetching = false;
+
+  // Filter buttons
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      renderRequests();
+    });
+  });
+
+  // Fetch requests from RTDB via REST
+  async function fetchRequests() {
+    if (isFetching) return;
+    isFetching = true;
+    
+    syncDot.style.background = 'var(--accent)';
+    syncText.textContent = 'Syncing...';
+    
+    try {
+      const response = await fetch(`${FIREBASE_DB_URL}/requests.json`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+      
+      const data = await response.json();
+      allRequests = data || {};
+      
+      syncDot.style.background = 'var(--green)';
+      syncText.textContent = 'Live';
+      renderRequests();
+      
+    } catch (err) {
+      console.error('Fetch error:', err);
+      syncDot.style.background = 'var(--red)';
+      syncText.textContent = 'Error';
+    } finally {
+      isFetching = false;
+    }
+  }
+
+  function renderRequests() {
+    const entries = Object.entries(allRequests);
+    
+    // Sort newest first (push keys are chronological)
+    entries.sort((a, b) => b[0].localeCompare(a[0]));
+    
+    // Filter
+    const filtered = entries.filter(([_, req]) => {
+      if (currentFilter === 'all') return true;
+      return req.status === currentFilter;
+    });
+
+    totalCount.textContent = entries.length;
+
+    if (filtered.length === 0) {
+      requestsList.innerHTML = `
+        <div class="empty-state">
+          <h3>No signals yet</h3>
+          <p>${currentFilter === 'all' 
+            ? 'When someone submits the contact form, their request will appear here within 5 seconds.' 
+            : 'No requests match this filter.'}</p>
+        </div>
+      `;
+      return;
+    }
+
+    requestsList.innerHTML = filtered.map(([id, req]) => {
+      const date = req.createdAt 
+        ? new Date(req.createdAt).toLocaleDateString('en-IN', { 
+            day:'2-digit', month:'short', year:'numeric', 
+            hour:'2-digit', minute:'2-digit' 
+          })
+        : 'Unknown date';
+      
+      return `
+        <div class="request-card ${req.status === 'new' ? 'new' : 'reviewed'}">
+          <div class="req-left">
+            <span class="req-status ${req.status}">${req.status}</span><br/>
+            ${date}<br/>
+            <span style="color:var(--ink-dim)">#${id.slice(-6)}</span>
+          </div>
+          <div class="req-center">
+            <h4>${escapeHTML(req.name)}</h4>
+            <div class="email">${escapeHTML(req.email)}</div>
+            <div class="org">${escapeHTML(req.organisation || '—')}</div>
+            <span class="engagement">${escapeHTML(req.engagement || 'Not specified')}</span>
+            <div class="brief">${escapeHTML(req.brief)}</div>
+          </div>
+          <div class="req-right">
+            ${req.status === 'new' 
+              ? `<button class="db-btn" onclick="markReviewed('${id}')">Mark Reviewed ✓</button>`
+              : `<button class="db-btn" style="opacity:.5;cursor:default" disabled>Reviewed</button>`
+            }
+          </div>
+        </div>
+      `;
+    }).join('');
+    
+    // Bind cursor elements inside the newly populated request list
+    rebindCursors();
+  }
+
+  window.markReviewed = async function(id) {
+    try {
+      const response = await fetch(`${FIREBASE_DB_URL}/requests/${id}/status.json`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify('reviewed')
+      });
+      
+      if (response.ok) {
+        showToast('Signal marked as reviewed ✓');
+        fetchRequests(); // Refresh immediately
+      } else {
+        showToast('Failed to update. Try again.');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Network error. Try again.');
+    }
+  };
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+
+  function escapeHTML(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // Clock
+  function tick() {
+    const d = new Date();
+    document.getElementById('dbClock').textContent = 
+      d.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit', second:'2-digit' }) + ' IST';
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // Initial fetch + start polling
+  fetchRequests();
+  setInterval(fetchRequests, POLL_INTERVAL);
+}
+</script>
+
+</body>
+</html>
